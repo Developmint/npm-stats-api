@@ -34,7 +34,7 @@ $npmStats->getStats('jquery');
 
 ### Get stats with a period of your choice
 
-Use a constant provided by the NpmStats class to get dates for the last day, week or month
+Use a constant provided by the NpmStats class to get stats for the last day, week, month or in total.
 ``` php
 $npmStats->getStats('jquery', NpmStats::LAST_DAY);
 ```
