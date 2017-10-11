@@ -29,16 +29,16 @@ class NpmStatsTest extends TestCase
         $this->assertArrayHasKey('downloads', $result);
         $this->assertArrayHasKey('start', $result);
         $this->assertArrayHasKey('end', $result);
-        $this->assertEquals('jquery', $result["package"]);
+        $this->assertEquals($packageName, $result["package"]);
     }
 
     public function testItCanRetrievePointBulkStats()
     {
-        $packageNames = 'vuejs,express';
+        $packageNames = 'vue,express';
 
         $result = $this->npmStats->getStats($packageNames, NpmStats::LAST_DAY);
 
-        $this->assertArrayHasKey('vuejs', $result);
+        $this->assertArrayHasKey('vue', $result);
         $this->assertArrayHasKey('express', $result);
     }
 
@@ -50,9 +50,21 @@ class NpmStatsTest extends TestCase
 
         $this->assertArrayHasKey('start', $result);
         $this->assertArrayHasKey('end', $result);
-        $this->assertEquals('jquery', $result["package"]);
+        $this->assertEquals($packageName, $result["package"]);
         $this->assertArrayHasKey('downloads', $result);
         $this->assertArrayHasKey('downloads', $result["downloads"][0]);
         $this->assertArrayHasKey('day', $result["downloads"][0]);
+    }
+
+    public function testItCanRetrieveAllTimeStats()
+    {
+        $packageName = 'vue-save-state';
+        $currentDate = (new \DateTime())->format("Y-m-d");
+        $result = $this->npmStats->getStats($packageName, "2015-01-01:{$currentDate}");
+        var_dump($result);
+        $this->assertArrayHasKey('start', $result);
+        $this->assertArrayHasKey('end', $result);
+        $this->assertEquals($packageName, $result["package"]);
+        $this->assertArrayHasKey('downloads', $result);
     }
 }
