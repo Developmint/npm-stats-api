@@ -4,6 +4,7 @@ namespace Developmint\NpmStats\Test;
 
 use Developmint\NpmStats\NpmStats;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use PHPUnit\Framework\TestCase;
 
 class NpmStatsTest extends TestCase
@@ -56,14 +57,42 @@ class NpmStatsTest extends TestCase
         $this->assertArrayHasKey('day', $result["downloads"][0]);
     }
 
+    public function testItCanRetrieveYearlyStats()
+    {
+        $packageName = 'vue-save-state';
+        $result = $this->npmStats->getStats($packageName, NpmStats::LAST_YEAR);
+        $this->assertArrayHasKey('start', $result);
+        $this->assertArrayHasKey('end', $result);
+        $this->assertEquals((new \DateTime)->modify("-1 year")->format("Y-m-d"), $result["start"]);
+
+        $this->assertEquals($packageName, $result["package"]);
+        $this->assertArrayHasKey('downloads', $result);
+
+    }
+
+    public function testItCanRetrieveYearlyStatsForBulk()
+    {
+        $packageName = 'vue-save-state,vue';
+        $result = $this->npmStats->getStats($packageName, NpmStats::LAST_YEAR);
+        $this->assertArrayHasKey('vue-save-state', $result);
+        $this->assertArrayHasKey('vue', $result);
+    }
+
     public function testItCanRetrieveAllTimeStats()
     {
         $packageName = 'vue-save-state';
         $result = $this->npmStats->getStats($packageName, NpmStats::TOTAL);
-        var_dump($result);
         $this->assertArrayHasKey('start', $result);
         $this->assertArrayHasKey('end', $result);
         $this->assertEquals($packageName, $result["package"]);
         $this->assertArrayHasKey('downloads', $result);
+    }
+
+    public function testItCanNotRetrieveAllTimeStatsForBulk()
+    {
+        $this->expectException(RequestException::class);
+        $packageName = 'vue-save-state,express';
+        $result = $this->npmStats->getStats($packageName, NpmStats::TOTAL);
+        $this->assertArrayNotHasKey('error', $result);
     }
 }

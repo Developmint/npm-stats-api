@@ -14,6 +14,7 @@ class NpmStats
     const LAST_DAY = "last-day";
     const LAST_WEEK = "last-week";
     const LAST_MONTH = "last-month";
+    const LAST_YEAR = "last-year";
     const TOTAL = "total";
 
     /**
@@ -59,10 +60,7 @@ class NpmStats
             throw new \Exception("Package name can't be empty");
         }
 
-        if ($period === self::TOTAL) {
-            $currentDate = (new \DateTime)->format("Y-m-d");
-            $period = "2015-01-01:{$currentDate}";
-        }
+        $this->replaceSpecialPeriodsIfApplicable($period);
 
         if ($asRange) {
             return $this->getStatsByRange($packageName, $period);
@@ -86,5 +84,19 @@ class NpmStats
             ->getContents();
 
         return json_decode($packages, true);
+    }
+
+    private function replaceSpecialPeriodsIfApplicable(&$period)
+    {
+        if ($period === self::TOTAL) {
+            $currentDate = (new \DateTime)->format("Y-m-d");
+            $period = "2015-01-01:{$currentDate}";
+        } else if ($period === self::LAST_YEAR) {
+            $currentDate = (new \DateTime)->format("Y-m-d");
+            $beforeDate = (new \DateTime)->modify("-1 year")->format("Y-m-d");
+            $period = "{$beforeDate}:{$currentDate}";
+        }
+
+        return;
     }
 }
