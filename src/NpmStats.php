@@ -14,6 +14,7 @@ class NpmStats
     const LAST_DAY = "last-day";
     const LAST_WEEK = "last-week";
     const LAST_MONTH = "last-month";
+    const TOTAL = "total";
 
     /**
      * @param \GuzzleHttp\Client $client
@@ -56,6 +57,11 @@ class NpmStats
     {
         if (empty($packageName)) {
             throw new \Exception("Package name can't be empty");
+        }
+
+        if ($period === self::TOTAL) {
+            $currentDate = (new \DateTime)->format("Y-m-d");
+            $period = "2015-01-01:{$currentDate}";
         }
 
         if ($asRange) {

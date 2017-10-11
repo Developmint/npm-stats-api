@@ -59,8 +59,7 @@ class NpmStatsTest extends TestCase
     public function testItCanRetrieveAllTimeStats()
     {
         $packageName = 'vue-save-state';
-        $currentDate = (new \DateTime())->format("Y-m-d");
-        $result = $this->npmStats->getStats($packageName, "2015-01-01:{$currentDate}");
+        $result = $this->npmStats->getStats($packageName, NpmStats::TOTAL);
         var_dump($result);
         $this->assertArrayHasKey('start', $result);
         $this->assertArrayHasKey('end', $result);
