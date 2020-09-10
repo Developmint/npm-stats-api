@@ -2,6 +2,12 @@
 
 All notable changes to `npm-stats-api` will be documented in this file
 
+## 2.0.0 - 2020-09-10
+
+- Require PHP >= 7.2
+- Require Guzzle >= 7.0
+- Fix yearly range that resulted in a 400 request sometimes
+
 ## 1.0.3 - 2020-09-10
 
 - Add support for Guzzle 7
