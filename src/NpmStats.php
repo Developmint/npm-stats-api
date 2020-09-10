@@ -93,7 +93,7 @@ class NpmStats
             $period = "2015-01-01:{$currentDate}";
         } else if ($period === self::LAST_YEAR) {
             $currentDate = (new \DateTime)->format("Y-m-d");
-            $beforeDate = (new \DateTime)->modify("-1 year")->format("Y-m-d");
+            $beforeDate = (new \DateTime)->modify("-365 days")->format("Y-m-d");
             $period = "{$beforeDate}:{$currentDate}";
         }
 

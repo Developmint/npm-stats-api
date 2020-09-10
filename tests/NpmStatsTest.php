@@ -63,7 +63,7 @@ class NpmStatsTest extends TestCase
         $result = $this->npmStats->getStats($packageName, NpmStats::LAST_YEAR);
         $this->assertArrayHasKey('start', $result);
         $this->assertArrayHasKey('end', $result);
-        $this->assertEquals((new \DateTime)->modify("-1 year")->format("Y-m-d"), $result["start"]);
+        $this->assertEquals((new \DateTime)->modify("-365 days")->format("Y-m-d"), $result["start"]);
 
         $this->assertEquals($packageName, $result["package"]);
         $this->assertArrayHasKey('downloads', $result);
