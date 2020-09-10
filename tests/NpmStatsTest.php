@@ -12,7 +12,7 @@ class NpmStatsTest extends TestCase
     /** @var \Developmint\NpmStats\NpmStats */
     protected $npmStats;
 
-    public function setUp()
+    public function setUp() : void
     {
         $client = new Client();
 
