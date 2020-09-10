@@ -2,6 +2,10 @@
 
 All notable changes to `npm-stats-api` will be documented in this file
 
+## 1.0.3 - 2020-09-10
+
+- Add support for Guzzle 7
+
 ## 1.0.2 - 2017-10-11
 
 - Add another helper constant for retrieving last year stats
