@@ -2,6 +2,10 @@
 
 All notable changes to `npm-stats-api` will be documented in this file
 
+## 2.0.1 - 2020-12-11
+
+- allow PHP 8
+
 ## 2.0.0 - 2020-09-10
 
 - Require PHP >= 7.2
